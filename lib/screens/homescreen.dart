@@ -1,7 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:pedometer/Themes/colors.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pedometer/models/bottom_nav_bar.dart';
+import 'package:pedometer/screens/leaderboard_tab.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({
@@ -19,6 +22,15 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {
       _selectedIndex = index;
     });
+    if (index == 0) {
+      MaterialPageRoute(builder: (BuildContext context) => const LeaderBoard());
+    }
+    if (index == 1) {
+      MaterialPageRoute(builder: (BuildContext context) => const LeaderBoard());
+    }
+    if (index == 2) {
+      MaterialPageRoute(builder: (BuildContext context) => const LeaderBoard());
+    }
   }
 
   @override
@@ -27,7 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
       body: NestedScrollView(
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
-            const SliverAppBar(
+            SliverAppBar(
               title: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -43,9 +55,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       'Good Evening, Lucy',
                       style: TextStyle(color: Colors.white, fontSize: 20),
                     ),
-                    Row(
-                      children: [],
-                    )
                   ]),
               backgroundColor: colors.appbar,
               expandedHeight: 450.0,
@@ -56,15 +65,26 @@ class _HomeScreenState extends State<HomeScreen> {
               flexibleSpace: FlexibleSpaceBar(
                 centerTitle: true,
                 collapseMode: CollapseMode.parallax,
-                background: ClipRRect(
-                  borderRadius: BorderRadius.only(
-                    bottomLeft:
-                        Radius.circular(30.0), // Adjust the radius as needed
-                    bottomRight: Radius.circular(30.0),
+                background: Container(
+                  decoration: const BoxDecoration(
+                      gradient: LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          colors: [
+                        colors.appbar,
+                        Colors.black,
+                        Colors.white,
+                      ])),
+                  child: const ClipRRect(
+                    borderRadius: BorderRadius.only(
+                      bottomLeft:
+                          Radius.circular(30.0), // Adjust the radius as needed
+                      bottomRight: Radius.circular(30.0),
+                    ),
                   ),
                 ),
               ),
-              shape: RoundedRectangleBorder(
+              shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.vertical(
                   bottom: Radius.circular(
                       30.0), // Border radius for the collapsed state
@@ -80,29 +100,29 @@ class _HomeScreenState extends State<HomeScreen> {
       bottomNavigationBar: BottomNavyBar(
         borderRadius: BorderRadius.only(
             topRight: Radius.circular(10), topLeft: Radius.circular(10)),
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.white,
         selectedIndex: _selectedIndex,
         onItemSelected: _onItemSelected,
         items: [
           BottomNavyBarItem(
             icon: Icon(Icons.home),
             title: Text('Home'),
-            activeColor: colors.home,
+            activeColor: colors.activePage,
           ),
           BottomNavyBarItem(
             icon: Icon(Icons.analytics_rounded),
             title: Text('Leaderboard'),
-            activeColor: colors.leaderboard,
+            activeColor: colors.activePage,
           ),
           BottomNavyBarItem(
             icon: Icon(Icons.donut_large),
             title: Text('Analytics'),
-            activeColor: colors.analytics,
+            activeColor: colors.activePage,
           ),
           BottomNavyBarItem(
             icon: Icon(Icons.settings),
             title: Text('Settings'),
-            activeColor: colors.settings,
+            activeColor: colors.activePage,
           ),
         ],
       ),
