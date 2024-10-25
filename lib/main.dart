@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pedometer/screens/homescreen.dart';
-import 'package:pedometer/screens/landing_page.dart';
+import 'package:pedometer/models/new_user.dart';
 
 void main() {
   runApp(const MyApp());
@@ -12,8 +11,9 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: LandinPage(),
+    NewUser newUser = NewUser();
+    return MaterialApp(
+      home: newUser.firstPage(),
       debugShowCheckedModeBanner: false,
     );
   }

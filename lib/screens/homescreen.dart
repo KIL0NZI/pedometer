@@ -33,6 +33,8 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+  bool _isExpanded = true;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,50 +42,88 @@ class _HomeScreenState extends State<HomeScreen> {
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
             return <Widget>[
               SliverAppBar(
-                title: const Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.account_circle_outlined,
-                        size: 50,
-                      ),
-                      SizedBox(
-                        width: 12,
-                      ),
-                      Text(
-                        'Good Evening, Lucy',
-                        style: TextStyle(color: Colors.white, fontSize: 20),
-                      ),
-                    ]),
+                title: AnimatedOpacity(
+                  duration: const Duration(milliseconds: 300),
+                  opacity: _isExpanded ? 0.0 : 1.0, // Show title when collapsed
+                  child: const Text('Collapsed Title'),
+                ),
+
+                // title: const Row(
+                //     mainAxisAlignment: MainAxisAlignment.start,
+                //     crossAxisAlignment: CrossAxisAlignment.center,
+                //     children: [
+                //       Icon(
+                //         Icons.account_circle_outlined,
+                //         size: 50,
+                //       ),
+                //       SizedBox(
+                //         width: 12,
+                //       ),
+                //       Text(
+                //         'You have walked 10,000 steps so far',
+                //         style: TextStyle(color: Colors.white, fontSize: 20),
+                //       ),
+                //     ]),
+                automaticallyImplyLeading: false,
                 backgroundColor: Colors.yellow.shade400,
                 expandedHeight: 450.0,
                 toolbarHeight: 150.0,
                 floating: false,
                 pinned: true,
                 stretch: true,
-                flexibleSpace: FlexibleSpaceBar(
-                  centerTitle: true,
-                  collapseMode: CollapseMode.parallax,
-                  background: Container(
-                    decoration: const BoxDecoration(
-                        gradient: LinearGradient(
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                            colors: [
-                          Colors.black,
-                          colors.appbar,
-                          Colors.white,
-                        ])),
-                    child: const ClipRRect(
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(
-                            30.0), // Adjust the radius as needed
-                        bottomRight: Radius.circular(30.0),
-                      ),
+                flexibleSpace: LayoutBuilder(builder:
+                    (BuildContext context, BoxConstraints constraints) {
+                  var appBarHeight = constraints.biggest.height;
+                  _isExpanded = appBarHeight > 150;
+
+                  return FlexibleSpaceBar(
+                    centerTitle: true,
+                    title: AnimatedOpacity(
+                      duration: const Duration(milliseconds: 300),
+                      opacity:
+                          _isExpanded ? 0.0 : 1.0, // Show title when collapsed
+                      child: const Text('Collapsed Title'),
                     ),
-                  ),
-                ),
+                    collapseMode: CollapseMode.parallax,
+                    background: Stack(children: [
+                      if (_isExpanded)
+                        const Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              // ClipRRect(
+                              //   borderRadius: BorderRadius.only(
+                              //     bottomLeft: Radius.circular(
+                              //         30.0), // Adjust the radius as needed
+                              //     bottomRight: Radius.circular(30.0),
+                              //   ),
+                              // ),
+                              Text(
+                                'Welcome!',
+                                style: TextStyle(
+                                    fontSize: 32, color: Colors.white),
+                              ),
+                              SizedBox(height: 30),
+                              Column(
+                                children: [
+                                  CircularProgressIndicator(
+                                    strokeWidth: 10,
+                                    value: .50,
+                                    color: Colors.white,
+                                    backgroundColor: Colors.black,
+                                  ),
+                                  SizedBox(
+                                    height: 20,
+                                  ),
+                                  Text('5,000 Steps')
+                                ],
+                              )
+                            ],
+                          ),
+                        )
+                    ]),
+                  );
+                }),
                 shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.vertical(
                     bottom: Radius.circular(
