@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:pedometer/Themes/colors.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pedometer/models/bottom_nav_bar.dart';
+import 'package:pedometer/models/pedometer_model.dart';
 import 'package:pedometer/screens/leaderboard_tab.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -31,6 +32,14 @@ class _HomeScreenState extends State<HomeScreen> {
     if (index == 2) {
       MaterialPageRoute(builder: (BuildContext context) => const LeaderBoard());
     }
+  }
+
+  void main() {
+    Pedometer.pedestrianStatusStream.listen((PedestrianStatus status) {
+      String steps = status.status;
+      // print('Current status: ${status.status} at ${status.timeStamp}');
+      // Use status.status wherever you need in your app
+    });
   }
 
   bool _isExpanded = true;
@@ -106,16 +115,21 @@ class _HomeScreenState extends State<HomeScreen> {
                               SizedBox(height: 30),
                               Column(
                                 children: [
-                                  CircularProgressIndicator(
-                                    strokeWidth: 10,
-                                    value: .50,
-                                    color: Colors.white,
-                                    backgroundColor: Colors.black,
+                                  SizedBox(
+                                    width: 150,
+                                    height: 150,
+                                    child: CircularProgressIndicator(
+                                      strokeWidth: 30,
+                                      value: .50,
+                                      color: Colors.green,
+                                      backgroundColor: Colors.white,
+                                    ),
                                   ),
                                   SizedBox(
                                     height: 20,
                                   ),
-                                  Text('5,000 Steps')
+                                  Text('You have walked'),
+                                  Text(''),
                                 ],
                               )
                             ],
