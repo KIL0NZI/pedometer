@@ -76,6 +76,10 @@ class StepCount {
     _timeStamp = DateTime.now();
   }
 
+  StepCount() {
+    _timeStamp = DateTime.now();
+  }
+
   int get steps => _steps;
 
   DateTime get timeStamp => _timeStamp;

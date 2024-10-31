@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "96275281823",
+    "project_id": "step-counter-9e709",
+    "storage_bucket": "step-counter-9e709.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:96275281823:android:9af73ee2b6ac8dd851efaa",
+        "android_client_info": {
+          "package_name": "com.example.pedometer"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyASMDtuYvwRs_KC6JMXZu389VuAUA0LV6Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

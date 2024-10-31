@@ -1,8 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:pedometer/Themes/colors.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:pedometer/models/bottom_nav_bar.dart';
 import 'package:pedometer/models/pedometer_model.dart';
 import 'package:pedometer/screens/leaderboard_tab.dart';
@@ -19,6 +16,8 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
 
+  // StepCount stepCount = StepCount();
+
   void _onItemSelected(int index) {
     setState(() {
       _selectedIndex = index;
@@ -32,14 +31,6 @@ class _HomeScreenState extends State<HomeScreen> {
     if (index == 2) {
       MaterialPageRoute(builder: (BuildContext context) => const LeaderBoard());
     }
-  }
-
-  void main() {
-    Pedometer.pedestrianStatusStream.listen((PedestrianStatus status) {
-      String steps = status.status;
-      // print('Current status: ${status.status} at ${status.timeStamp}');
-      // Use status.status wherever you need in your app
-    });
   }
 
   bool _isExpanded = true;
@@ -96,7 +87,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     collapseMode: CollapseMode.parallax,
                     background: Stack(children: [
                       if (_isExpanded)
-                        const Center(
+                        Center(
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -129,7 +120,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                     height: 20,
                                   ),
                                   Text('You have walked'),
-                                  Text(''),
+                                  StreamBuilder<StepCount>(
+                                      stream: Pedometer.stepCountStream,
+                                      builder: (context, Snapshot) {
+                                        return Text(
+                                            '${StepCount().steps!}' + ' steps');
+                                      })
                                 ],
                               )
                             ],
